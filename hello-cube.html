@@ -31,6 +31,8 @@ var markerRoot1, markerRoot2;
 
 var mesh1;
 
+var videoTexture;
+
 initialize();
 animate();
 
@@ -112,11 +114,20 @@ function initialize()
 		type: 'pattern', patternUrl: "data/hiro.patt",
 	})
 
-	let geometry1	= new THREE.SphereGeometry(5, 32, 32 );
-	let material1	= new THREE.MeshNormalMaterial({
-		transparent: false,
-		opacity: 1,
-		side: THREE.DoubleSide
+	var canPlayMp4	= document.createElement('video').canPlayType('video/mp4') !== '' ? true : false
+	var canPlayOgg	= document.createElement('video').canPlayType('video/ogg') !== '' ? true : false
+	if( canPlayMp4 ){
+		var url	= 'videos/sintel.mp4'
+	}else if( canPlayOgg ){
+		var url	= 'videos/sintel.ogv'
+	}else	alert('cant play mp4 or ogv')
+
+	videoTexture= new THREEx.VideoTexture(url)
+	var video	= videoTexture.video
+
+	let geometry1	= new THREE.CubeGeometry(1,1,1);
+	let material1	= new THREE.MeshBasicMaterial({
+		map	: videoTexture.texture
 	}); 
 	
 	mesh1 = new THREE.Mesh( geometry1, material1 );
