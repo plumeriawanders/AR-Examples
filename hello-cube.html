@@ -101,6 +101,8 @@ function initialize()
 		cameraParametersUrl: 'data/camera_para.dat',
 		detectionMode: 'mono'
 	});
+
+	
 	
 	// copy projection matrix to camera when initialization complete
 	arToolkitContext.init( function onCompleted(){
@@ -114,9 +116,21 @@ function initialize()
 	// build markerControls
 	markerRoot1 = new THREE.Group();
 	scene.add(markerRoot1);
-	let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
-		type: 'pattern', patternUrl: "data/cabana.patt",
-	})
+	//let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
+		//type: 'pattern', patternUrl: "data/cabana.patt",
+	//})
+
+	 // init controls for camera
+	 let markerControls1 = new THREEx.ArMarkerControls(arToolkitContext, markerRoot1, {
+            type : 'nft',
+            descriptorsUrl : 'data/image',
+            changeMatrixMode: 'cameraTransformMatrix'
+        })
+
+        scene.visible = false
+
+        var root = new THREE.Object3D();
+        scene.add(root);
 
 	var canPlayMp4	= document.createElement('video').canPlayType('video/mp4') !== '' ? true : false
 	var canPlayOgg	= document.createElement('video').canPlayType('video/ogg') !== '' ? true : false
